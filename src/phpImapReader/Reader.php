@@ -883,6 +883,8 @@ class Reader
 
         $email->setId($uid);
 
+        $email->setStringHeaders($header_from_body);
+
         $email->setSize(isset($header->Size) ? $header->Size : 0);
 
         $header->subject = isset($header->subject)
@@ -972,24 +974,23 @@ class Reader
         } else {
             $this->decodePart($email, $body);
         }
-        
+
         $msgno = imap_msgno($this->stream(), $uid);
-		
-		$email->setMsgno($msgno);
-		
-		$headers = imap_fetchheader($this->stream(), $email->msgno());
-		
-		if ($headers) {
-		
-			$headers_array = explode("\n", imap_fetchheader($this->stream(), $email->msgno()));
-		
-			foreach ($headers_array as $header) {
-				if (strpos($header, "X-") !== false) {
-					$email->addCustomHeader($header);
-				}
-			}
-		
-		}
+
+        $email->setMsgno($msgno);
+
+        $headers = imap_fetchheader($this->stream(), $email->msgno());
+
+        if ($headers) {
+
+            $headers_array = explode("\n", imap_fetchheader($this->stream(), $email->msgno()));
+
+            foreach ($headers_array as $header) {
+                if (strpos($header, "X-") !== false) {
+                    $email->addCustomHeader($header);
+                }
+            }
+        }
 
         return $email;
     }
