@@ -141,7 +141,7 @@ class Reader
      * 
      * @return boolean
      */
-    public function __construct($hostname, $user_name, $password, $attachment_dir = false, $mark_as_read = true)
+    public function __construct($hostname, $user_name, $password, $attachment_dir = false, $mark_as_read = true, $encoding = 'UTF-8')
     {
         $this->hostname = $hostname;
 
@@ -149,7 +149,7 @@ class Reader
 
         $this->password = $password;
 
-        $this->encoding = 'UTF-8';
+        $this->encoding = $encoding;
 
         $this->retry = 0;
 
